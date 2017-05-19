@@ -48,4 +48,45 @@ describe('TodoAPI', () => {
     });
   });
 
+  describe('filterTodos', () => {
+    var todos = [{
+      id:1,
+      text: 'Hello',
+      completed: true
+    },{
+      id:2,
+      text: 'Todo 2',
+      completed: false
+    },{
+      id:3,
+      text: 'Todo 3',
+      completed: true
+    }
+  ]
+    it("should show every item if showCompleted is true" , () => {
+      var filterTodos = TodoAPI.filterTodos(todos,true,'');
+      expect(filterTodos.length).toBe(3);
+    });
+
+    it("should show only pending item if showCompleted is false" , () => {
+      var filterTodos = TodoAPI.filterTodos(todos,false,'');
+      expect(filterTodos.length).toBe(1);
+    });
+
+    it("should show pending item first" , () => {
+      var filterTodos = TodoAPI.filterTodos(todos,true,'');
+      expect(filterTodos[0].completed).toBe(false);
+    });
+
+    it("should filer todos by searchText" , () => {
+      var filterTodos = TodoAPI.filterTodos(todos,true,'todo');
+      expect(filterTodos.length).toBe(2);
+    });
+
+    it("show all todos for empty searchText" , () => {
+      var filterTodos = TodoAPI.filterTodos(todos,true,'');
+      expect(filterTodos.length).toBe(3);
+    });
+  });
+
 })
